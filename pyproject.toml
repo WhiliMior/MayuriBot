@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "timeline-mirai-ariadne"
+version = "0.1.0"
+description = ""
+authors = ["WhiliMior <52067436+WhiliMior@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "timeline_mirai_ariadne"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+graia-ariadne = "^0.10.3"
+graia-saya = "^0.0.17"
+click = "^8.1.3"
+arclet-alconna-graia = "^0.11.2"
+pandas = "^1.5.3"
+prettytable = "^3.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
