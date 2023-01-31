@@ -51,8 +51,8 @@ def no_buff(character_name):
     return f'{character_name}还没有buff×'
 
 
-def add_buff(player):
-    return f'{player}增加buff√'
+def add_buff(character_name, buff_name):
+    return f'{character_name}增加buff[{buff_name}]√'
 
 
 def wrong_range(range_input):
@@ -186,6 +186,8 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                 if os.path.exists(path_buff_character):
                     # 最后一行加上新buff
                     buff_dataframe.loc[-1] = buff_list
+                    # 排序
+                    buff_dataframe = buff_dataframe.sort_values(by=['range', 'type', 'value', 'source'], ascending=[False, False, True, True])
                     buff_dataframe.to_csv(path_buff_character, index=False)
                 # 没有
                 else:
@@ -194,7 +196,7 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     writer = csv.writer(csv_file)
                     writer.writerow(header)
                     writer.writerow(buff_list)
-                notice = add_buff(character_name)
+                notice = add_buff(character_name, buff_source)
         # 两个指令
         elif command2.matched:
             # 删除buff

@@ -91,7 +91,7 @@ async def Examination(app: Ariadne, sender: Sender, target: Target,
             attribute_name_cn = attribute_name_cn.strip('检定_')
             # 没有buff就单纯拿出值
             if buff_dataframe is None:
-                check_value = p.get_attribute(cmd1)
+                check_value = p.get_attribute_adv(cmd1)
                 check_value_notice = check_value
             else:
                 check_value, calculation_process = p.get_attribute_buffed(cmd1)

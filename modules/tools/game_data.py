@@ -65,6 +65,17 @@ class AttributesList:
                 '文学',
                 '视觉及表演艺术',
                 '负重']
+    basic_eleven_cn = ['体质',
+                       '敏捷',
+                       '力量',
+                       '意志',
+                       '教育',
+                       '智力',
+                       '医学及生命科学',
+                       '工程与科技',
+                       '军事与生存',
+                       '文学',
+                       '视觉及表演艺术', ]
     basic_cn_to_en = combine_lists_to_dict(basic_cn, basic_en)
     basic_en_to_cn = combine_lists_to_dict(basic_en, basic_cn)
 
@@ -144,11 +155,14 @@ base_folder = 'data_tl_game'
 class Player:
 
     def __init__(self, player_id, character_name):
+        self.path_buff_character = None
+        self.path_weapon_character = None
+
         self.buff_dataframe = None
         self.player_dataframe = None
-        self.path_buff_character = None
-        self.player = player_id
+        self.weapon_dataframe = None
 
+        self.player = player_id
         self.path_folder_player = f'{base_folder}/player/{self.player}'
         self.path_file_player = f'{self.path_folder_player}/plr_{self.player}.csv'
 
@@ -179,17 +193,24 @@ class Player:
 
             # 角色buff文档
             self.path_buff_character = f'{self.path_folder_player}/chr_{self.character_code}_buff.csv'
-
+            self.path_weapon_character = f'{self.path_folder_player}/chr_{self.character_code}_weapon.csv'
+            # buff 文档
             if os.path.exists(self.path_buff_character):
                 # 读取角色的buff列表到csv
                 csv_file = open(self.path_buff_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
                 self.buff_dataframe = pd.read_csv(csv_file, header=0, sep=',')
                 csv_file.close()
+            # 武器文档
+            if os.path.exists(self.path_weapon_character):
+                # 获取dataframe
+                csv_file = open(self.path_weapon_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
+                self.weapon_dataframe = pd.read_csv(csv_file, header=0, sep=',')
+                csv_file.close()
 
             return True
 
     # 输入中文, 获取属性数值
-    def get_attribute(self, attribute):
+    def get_attribute_adv(self, attribute):
         attribute = get_adv_cn_to_en(attribute)
         # 没有属性
         if attribute is None:
@@ -206,7 +227,7 @@ class Player:
         if attri_name is None:
             return None
         else:
-            attri_value = self.get_attribute(attribute)
+            attri_value = self.get_attribute_adv(attribute)
             # 定义四种type的总pool
             # 直接加算结果 = 直接加算A + 直接加算B + ...
             result_direct_add = 0
@@ -243,7 +264,7 @@ class Player:
                     result_final_time += buff_value
             calculation_process = f'(({attri_value}+{result_direct_add})*(1+{result_direct_time})+{result_final_add})*(1+{result_final_time})'
             attri_buffed = ((attri_value + result_direct_add) * (
-                        1 + result_direct_time) + result_final_add) * (1 + result_final_time)
+                    1 + result_direct_time) + result_final_add) * (1 + result_final_time)
             attri_buffed = toolkits.reserve_two_decimals(attri_buffed)
 
             return attri_buffed, calculation_process
@@ -258,7 +279,7 @@ def read_basic_attribute(character, attribute_cn):
     return value
 
 
-# 详细属性计算, 返还一个包含所有adv属性对象
+# 输入对象, 详细属性计算, 返还一个包含所有adv属性对象
 def create_advanced_attributes(character):
     # 声明空字典
     attribute_dict = {}
@@ -312,6 +333,8 @@ def create_advanced_attributes(character):
         revision_size = 1
     else:
         revision_size = math.log(size / standard_size, math.e) + 1
+    if revision_size <= 0:
+        revision_size = 0.01
     add_attribute('修正_体型', revision_size)
 
     # 计算修正后物理，体质
@@ -334,6 +357,8 @@ def create_advanced_attributes(character):
     full_weight = check_strength * 10 / level
     weight = read_basic_attribute(character, '负重')
     revision_weight = -1 * math.pow(weight / full_weight, 2) + 1
+    if revision_weight <= 0:
+        revision_weight = 0.01
     add_attribute('总_负重', full_weight)
     add_attribute('修正_负重', revision_weight)
 

@@ -39,10 +39,16 @@ def reserve_zero_decimals(number):
     return float(format(number, '.0f'))
 
 
+# 字典转换为json
+def dict_to_json(dict):
+    json_data = json.dumps(dict, sort_keys=False, indent=4, ensure_ascii=False)
+    return json_data
+
+
 # 对象转换为json
 def obj_to_json(obj):
     data = obj.__dict__
-    json_data = json.dumps(data, sort_keys=False, indent=4, ensure_ascii=False)
+    json_data = dict_to_json(data)
     return json_data
 
 

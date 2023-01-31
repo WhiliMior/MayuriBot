@@ -1,0 +1,12 @@
+source,range,value,type
+他是你,r_physical,0.34,direct_time
+火焰山,r_physical,24.0,direct_add
+他是你,r_physical,34.0,direct_add
+是你,r_physical,34,direct_add
+水上公园,r_mental,0.24,final_time
+火焰山,r_all,24.0,direct_add
+火焰山,r_all,24.0,direct_add
+啊撒大网的,check_visual_and_performing_art,150.0,final_add
+他是你,check_visual_and_performing_art,0.34,direct_time
+据我,check_visual_and_performing_art,0.34,direct_time
+据我,check_visual_and_performing_art,150.0,direct_add
