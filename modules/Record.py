@@ -35,10 +35,6 @@ def cmd2_not_number():
     return f'请输入一个带正负号的数字作为第二个变量×'
 
 
-def no_attri(attribute):
-    return f'没有找到属性[{attribute}]×'
-
-
 def record_attri(character_name, attribute, attri_value_old, attri_value_new, attri_value_full):
     if attri_value_old > attri_value_new:
         change = '[↓]'

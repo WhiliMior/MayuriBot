@@ -14,7 +14,7 @@ WeaponCreate = f'^{headers}setupWP'
 WeaponManage = f'^{headers}wp'
 Examination = f'^{headers}ex'
 Negotiation = '^([.]|[。])ne[g]?.*'
-PreparationCheck = '^([.]|[。])pr[e]?.*'
+PreparationCheck = f'^{headers}pr[e]?'
 Battle = r'^(^([.]|[。])ba[t]?)'
 Record = f'^{headers}crd'
 
