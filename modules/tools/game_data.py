@@ -172,6 +172,7 @@ class Player:
 
             self.path_file_character = f'{self.path_folder_player}/chr_{self.character_code}.json'
             self.path_file_character_adv = f'{self.path_folder_player}/chr_{self.character_code}_adv.json'
+            self.path_file_character_crd = f'{self.path_folder_player}/chr_{self.character_code}_crd.json'
 
     def get_character(self):
         player_file = self.path_file_player
@@ -190,6 +191,7 @@ class Player:
             # 角色文档
             self.path_file_character = f'{self.path_folder_player}/chr_{self.character_code}.json'
             self.path_file_character_adv = f'{self.path_folder_player}/chr_{self.character_code}_adv.json'
+            self.path_file_character_crd = f'{self.path_folder_player}/chr_{self.character_code}_crd.json'
 
             # 角色buff文档
             self.path_buff_character = f'{self.path_folder_player}/chr_{self.character_code}_buff.csv'
@@ -268,6 +270,40 @@ class Player:
             attri_buffed = toolkits.reserve_two_decimals(attri_buffed)
 
             return attri_buffed, calculation_process
+
+    def change_weight(self, weight):
+        attri_dict = toolkits.json_to_dict(self.path_file_character)
+        current_weight = attri_dict['weight']
+        weight_original = current_weight
+        # 求和weapon weight
+        change_weight = weight
+        # 添加到人物
+        character_weight = current_weight + change_weight
+        weight_now = character_weight
+        attri_dict['weight'] = character_weight
+        # 写回去
+        attri_json = toolkits.dict_to_json(attri_dict)
+        toolkits.write_file(self.path_file_character, attri_json)
+
+        # 计算详细数据
+        c = toolkits.json_to_obj(self.path_file_character)
+        c_adv = toolkits.json_to_obj(self.path_file_character_adv)
+        revision_weight = c_adv.revision_weight
+        full_weight = c_adv.full_weight
+        check_dexterity = c_adv.check_dexterity
+        c_adv_new = create_advanced_attributes(c)
+        # 写入文件
+        attri_json = toolkits.obj_to_json(c_adv_new)
+        toolkits.write_file(self.path_file_character_adv, attri_json)
+
+        revision_weight_new = c_adv_new.revision_weight
+        full_weight_new = c_adv_new.full_weight
+        check_dexterity_new = c_adv_new.check_dexterity
+
+        notice = f'负重变更: {weight_original}→{weight_now}/{full_weight}\n' \
+                 f'负重修正变更: {revision_weight}→{revision_weight_new}\n' \
+                 f'敏捷变更: {check_dexterity}→{check_dexterity_new}'
+        return notice
 
 
 # 读取character中的basic属性
@@ -407,6 +443,47 @@ def create_advanced_attributes(character):
                        (math.log(mental / physical, 10) + 1) * \
                        (math.log(appearance / 50, math.e) + 1)
     add_attribute('加成_交涉', negotiation_buff)
+
+    # 创建玩家crd文件
+    hp_full = float(full_hitpoint)
+    mp_full = full_willpower
+    cash_origin = cash
+
+    player = character.player
+    character_name = character.name
+    p = Player(player, character_name)
+    path_file_character_crd = p.path_file_character_crd
+    # 检查有没有先前的crd数据，没有就直接创建
+    if not os.path.exists(path_file_character_crd):
+        hp = hp_full
+        mp = mp_full
+        cash = cash_origin
+    else:
+        # 读取crd数据
+        character_crd_dict = toolkits.json_to_dict(path_file_character_crd)
+
+        # 获取crd数据中的值
+        hp = character_crd_dict['hp']
+        mp = character_crd_dict['mp']
+        cash = character_crd_dict['cash']
+
+        # 如果某项属性小于它的全量属性，则修改为等同于全量属性
+        if hp > hp_full:
+            hp = hp_full
+        if mp > mp_full:
+            mp = mp_full
+        if cash > cash_origin:
+            cash = cash_origin
+
+    # 更新crd数据并写入文件
+    crd_list_cn = ['hp', 'hp_full', 'mp', 'mp_full', 'cash', 'cash_origin']
+    crd_list_value = [hp, hp_full, mp, mp_full, cash, cash_origin]
+    # 保留一位小数
+    crd_list_value = [toolkits.reserve_one_decimals(value) for value in crd_list_value]
+
+    character_crd_dict = dict(zip(crd_list_cn, crd_list_value))
+    crd_json = toolkits.dict_to_json(character_crd_dict)
+    toolkits.write_file(path_file_character_crd, crd_json)
 
     # 添加属性
     class Character:

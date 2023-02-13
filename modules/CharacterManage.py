@@ -84,10 +84,14 @@ async def ManageCharacter(app: Ariadne, sender: Sender, target: Target,
                 p = game_data.Player(player_id, character_name)
                 character_file = p.path_file_character
                 character_file_adv = p.path_file_character_adv
+                character_file_weapon = p.path_weapon_character
+                character_file_buff = p.path_buff_character
                 if len(player_dataframe) <= 1:
                     os.remove(player_file)
                     os.remove(character_file)
                     os.remove(character_file_adv)
+                    os.remove(character_file_weapon)
+                    os.remove(character_file_buff)
                 else:
                     if character_using == 1:
                         player_dataframe.loc[0, 'using'] = 1
@@ -95,6 +99,8 @@ async def ManageCharacter(app: Ariadne, sender: Sender, target: Target,
                     player_dataframe.to_csv(player_file, index=False)
                     os.remove(character_file)
                     os.remove(character_file_adv)
+                    os.remove(character_file_weapon)
+                    os.remove(character_file_buff)
                 notice = delete(character_name)
         # 有一个指令时
         elif command1.matched:
@@ -144,7 +150,7 @@ async def ManageCharacter(app: Ariadne, sender: Sender, target: Target,
             send_list = []
             content = f'您共有{len(player_dataframe)}个角色'
             for index, data in player_dataframe.iterrows():
-                if data[3] == 0:
+                if data[-1] == 0:
                     using = f'[{index + 1}]'
                 else:
                     using = '[●]'

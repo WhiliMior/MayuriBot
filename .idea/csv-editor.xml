@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\data_tl_game\player\1253165119\chr_b5rKr5rKr_weapon.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\data_tl_game\player\1253165119\chr_b6I6r5aic_buff.csv">
           <value>
             <Attribute>

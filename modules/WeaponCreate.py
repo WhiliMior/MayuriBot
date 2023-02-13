@@ -19,12 +19,7 @@ from modules.tools import game_data, toolkits, regex
 from modules.tools.toolkits import Sender, Target
 
 """
-.buff {来源} {属性} {数值} {类型}
-.buff del {序号}
-.buff {属性或范围}
-.buff
-
-名称 类型 伤害 前摇 射程 载弹量 装填时间 负重 备注
+.WPsetup '名称', '类型', '增幅属性', '伤害', '前摇', '射程', '载弹量', '当前载弹', '装填时间', '负重', '备注', '使用'
 """
 
 # 所有要记录的条目
@@ -61,11 +56,8 @@ def wrong_type(type):
     return f'不存在武器类型[{type}]×'
 
 
-def weapon_create(character_name, weapon_name, weight_original, weight_now, full_weight, revision_weight, check_dexterity, revision_weight_new, check_dexterity_mew):
-    return f'{character_name}增加武器[{weapon_name}]√\n' \
-           f'负重变更: {weight_original}→{weight_now}/{full_weight}\n' \
-           f'负重修正变更: {revision_weight}→{revision_weight_new}\n' \
-           f'敏捷变更: {check_dexterity}→{check_dexterity_mew}'
+def weapon_create(character_name, weapon_name):
+    return f'{character_name}增加武器[{weapon_name}]√'
 
 
 # 监听指令并回复
@@ -125,11 +117,6 @@ async def WeaponCreate(app: Ariadne, sender: Sender, target: Target,
             wp_name = weapon_property['name']
             wp_type = weapon_property['type']
             wp_attribute = weapon_property['attribute']
-            if wp_attribute in basic_eleven_cn:
-                wp_attribute = basic_cn_to_en[wp_attribute]
-            else:
-                notice = wrong_attribute(wp_attribute)
-                error = True
             wp_damage = weapon_property['damage']
             wp_cast = weapon_property['cast']
             wp_range = weapon_property['range']
@@ -144,14 +131,24 @@ async def WeaponCreate(app: Ariadne, sender: Sender, target: Target,
                 # amplifier
                 if wp_type == type_list_en[0]:
                     wp_load_current = ''
+                    # 检测attribute
+                    if wp_attribute in basic_eleven_cn:
+                        wp_attribute = basic_cn_to_en[wp_attribute]
+                    else:
+                        notice = wrong_attribute(wp_attribute)
+                        error = True
                 # artillery
                 elif wp_type == type_list_en[1]:
                     wp_load = int(wp_load)
                     wp_load_current = wp_load
                     wp_attribute = ''
+            # 留空
+            elif wp_type == '':
+                wp_type = type_list_en[2]
             else:
                 notice = wrong_type(wp_type)
                 error = True
+
             wp_reload_time = weapon_property['reload_time']
             wp_weight = weapon_property['weight']
             wp_note = weapon_property['note']
@@ -189,31 +186,15 @@ async def WeaponCreate(app: Ariadne, sender: Sender, target: Target,
             path_file_character = p.path_file_character
             path_file_character_adv = p.path_file_character_adv
             # 添加负重到角色
-
             attri_dict = toolkits.json_to_dict(path_file_character)
             current_weight = attri_dict['weight']
             # 求和weapon weight
             weapon_weight = wp_weight
             # 添加到人物
             character_weight = current_weight + weapon_weight
-            attri_dict['weight'] = character_weight
-            # 写回去
-            attri_json = toolkits.dict_to_json(attri_dict)
-            toolkits.write_file(path_file_character, attri_json)
-
-            # 计算详细数据
-            c = toolkits.json_to_obj(path_file_character)
-            c_adv = toolkits.json_to_obj(path_file_character_adv)
-            revision_weight = c_adv.revision_weight
-            full_weight = c_adv.full_weight
-            check_dexterity = c_adv.check_dexterity
-            c_adv_new = game_data.create_advanced_attributes(c)
-            revision_weight_new = c_adv_new.revision_weight
-            full_weight_new = c_adv_new.full_weight
-            check_dexterity_new = c_adv_new.check_dexterity
-
             # 重新计算高级属性
+            result_notice = p.change_weight(wp_weight)
 
-            notice = weapon_create(character_name, wp_name, current_weight, character_weight, full_weight, revision_weight, check_dexterity, revision_weight_new, check_dexterity_new)
+            notice = weapon_create(character_name, wp_name) + '\n' + result_notice
 
     await app.send_message(sender, MessageChain(notice))

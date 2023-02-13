@@ -1,9 +1,6 @@
-import csv
-import os
 import random
 import re
 
-import pandas as pd
 from graia.ariadne.app import Ariadne
 from graia.ariadne.event.message import GroupMessage, FriendMessage
 from graia.ariadne.message.chain import MessageChain
