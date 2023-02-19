@@ -32,38 +32,11 @@ def no_attri(attribute):
     return f'没有找到属性[{attribute}]×'
 
 
-def get_impact_number(p, attribute, number):
-    buff_dataframe = p.buff_dataframe
-    attribute_name = game_data.get_adv_cn_to_en(attribute)
-    if attribute_name is None:
-        return None
-    attribute_name_cn = game_data.advanced_en_to_cn[attribute_name]
-    attribute_name_cn = attribute_name_cn.strip('检定_')
-    if buff_dataframe is None:
-        attribute_value = p.get_attribute_adv(attribute)
-        check_value_notice = attribute_value
-    else:
-        attribute_value, calculation_process = p.get_attribute_buffed(attribute)
-        check_value_notice = f'{attribute_value} {buffed}'
-
-    if toolkits.check_string('t', number):
-        time = float(re.sub(r'[tT]', "", str(number)))
-        impact_number = (attribute_value / 20) * time
-    elif toolkits.is_number(number):
-        impact_number = float(number)
-        time = (impact_number * 20) / attribute_value
-
-    time = toolkits.reserve_two_decimals(time)
-    impact_number = toolkits.reserve_two_decimals(impact_number)
-
-    return attribute_name_cn, check_value_notice, impact_number, time
-
-
 def prep_check_result(p, attribute, number):
     character_name = p.character_name
-    if not get_impact_number(p, attribute, number):
+    if not p.get_impact_number(attribute, number):
         return no_attri(attribute)
-    attribute_name, check_value_notice, impact_number, time = get_impact_number(p, attribute, number)
+    attribute_name, check_value_notice, impact_number, time = p.get_impact_number(attribute, number)
     message = f'{character_name}: \n' \
               f'{attribute_name}: {check_value_notice}\n' \
               f'影响数值: {impact_number}\n' \

@@ -1,2 +1,4 @@
 name,type,attribute,damage,cast,range,load,current_load,reload_time,weight,note,using
+“小医生”左轮手枪,artillery,,100.0,5.0,30.0,6.0,2.0,10.0,30.0,,0
 棉花糖黏着地雷,other,,,,20.0,,,30.0,40.0,黏着1500,1
+臂刃,amplifier,strength,20.0,,,,,,25.0,,0

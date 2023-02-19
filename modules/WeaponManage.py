@@ -1,12 +1,3 @@
-"""
-.buff del {序号}
-.buff {序号}
-"""
-
-# def weapon_delete():
-
-# def weapon_select():
-
 import os
 import re
 
@@ -27,10 +18,10 @@ from modules.tools import game_data, toolkits, regex
 from modules.tools.toolkits import Sender, Target
 
 """
-.chr 显示现有角色
-.chr {序号} 选择角色
-.chr show 显示角色属性
-.chr del {序号} 删除选定角色
+.wp 显示现有角色
+.wp {序号} 选择角色
+.wp show 显示角色属性
+.wp del {序号} 删除选定角色
 """
 
 

@@ -21,6 +21,7 @@ from modules.tools.toolkits import Sender, Target
 """
 .buff {来源} {属性} {数值} {类型}
 .buff del {序号}
+.buff del all
 .buff {属性或范围}
 .buff
 """
@@ -78,6 +79,10 @@ def del_buff(index):
     return f'删除buff {index}√'
 
 
+def del_buff_all():
+    return f'删除所有buff√'
+
+
 # 监听指令并回复
 regular_expression = regex.Buff
 twilight = Twilight(
@@ -105,8 +110,6 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
     advanced_en = a.advanced_en
     advanced_cn_to_en = a.advanced_cn_to_en
     advanced_en_to_cn = a.advanced_en_to_cn
-
-    buff_dataframe = p.buff_dataframe
 
     notice = 'error'
     error = False
@@ -187,7 +190,8 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     # 最后一行加上新buff
                     buff_dataframe.loc[-1] = buff_list
                     # 排序
-                    buff_dataframe = buff_dataframe.sort_values(by=['range', 'type', 'value', 'source'], ascending=[False, False, True, True])
+                    buff_dataframe = buff_dataframe.sort_values(by=['range', 'type', 'value', 'source'],
+                                                                ascending=[False, False, True, True])
                     buff_dataframe.to_csv(path_buff_character, index=False)
                 # 没有
                 else:
@@ -208,6 +212,8 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     error = True
                 elif toolkits.check_string('all', cmd2):
                     os.remove(path_buff_character)
+                    notice = del_buff_all()
+                    error = True
                 else:
                     index = str(command2.result)
                     notice = del_buff(index)
@@ -316,6 +322,5 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     # 属性下没有buff
 
                     notice = content
-
 
     await app.send_message(sender, MessageChain(notice))

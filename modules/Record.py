@@ -24,8 +24,6 @@ from modules.tools.toolkits import Sender, Target
 .crd
 """
 
-buffed = '[↑]'
-
 
 def no_chr(player):
     return f'{player}还没有角色×'

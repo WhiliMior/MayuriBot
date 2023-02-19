@@ -13,10 +13,11 @@ Buff = f'^{headers}bu[f]?[f]?'
 WeaponCreate = f'^{headers}setupWP'
 WeaponManage = f'^{headers}wp'
 Examination = f'^{headers}ex'
-Negotiation = '^([.]|[。])ne[g]?.*'
+Negotiation = f'^{headers}ne[g]?'
 PreparationCheck = f'^{headers}pr[e]?'
-Battle = r'^(^([.]|[。])ba[t]?)'
+Battle = f'^({headers}ba[t]?)'
 Record = f'^{headers}crd'
+LevelUp = f'{headers}lv'
 
 # 骰子
 RollDice = '^([.]|[。])[r].*'

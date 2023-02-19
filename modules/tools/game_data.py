@@ -1,10 +1,9 @@
 import math
 import os
 import codecs
-import pandas as pd
+import re
 
-from modules import Buff
-from modules.tools import toolkits
+import pandas as pd
 
 
 def combine_lists_to_dict(a, b):
@@ -13,6 +12,10 @@ def combine_lists_to_dict(a, b):
     for x, y in zip(a, b):
         combined_dict[x] = y
     return combined_dict
+
+
+from modules import Buff
+from modules.tools import toolkits
 
 
 # 所有的属性列表
@@ -174,6 +177,22 @@ class Player:
             self.path_file_character_adv = f'{self.path_folder_player}/chr_{self.character_code}_adv.json'
             self.path_file_character_crd = f'{self.path_folder_player}/chr_{self.character_code}_crd.json'
 
+            # 角色buff文档
+            self.path_buff_character = f'{self.path_folder_player}/chr_{self.character_code}_buff.csv'
+            self.path_weapon_character = f'{self.path_folder_player}/chr_{self.character_code}_weapon.csv'
+            # buff 文档
+            if os.path.exists(self.path_buff_character):
+                # 读取角色的buff列表到csv
+                csv_file = open(self.path_buff_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
+                self.buff_dataframe = pd.read_csv(csv_file, header=0, sep=',')
+                csv_file.close()
+            # 武器文档
+            if os.path.exists(self.path_weapon_character):
+                # 获取dataframe
+                csv_file = open(self.path_weapon_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
+                self.weapon_dataframe = pd.read_csv(csv_file, header=0, sep=',')
+                csv_file.close()
+
     def get_character(self):
         player_file = self.path_file_player
         # 打开玩家csv到dataframe
@@ -304,6 +323,33 @@ class Player:
                  f'负重修正变更: {revision_weight}→{revision_weight_new}\n' \
                  f'敏捷变更: {check_dexterity}→{check_dexterity_new}'
         return notice
+
+    def get_impact_number(self, attribute, number):
+        buffed = '[↑]'
+        buff_dataframe = self.buff_dataframe
+        attribute_name = get_adv_cn_to_en(attribute)
+        if attribute_name is None:
+            return None
+        attribute_name_cn = advanced_en_to_cn[attribute_name]
+        attribute_name_cn = attribute_name_cn.strip('检定_')
+        if buff_dataframe is None:
+            attribute_value = self.get_attribute_adv(attribute)
+            check_value_notice = attribute_value
+        else:
+            attribute_value, calculation_process = self.get_attribute_buffed(attribute)
+            check_value_notice = f'{attribute_value} {buffed}'
+
+        if toolkits.check_string('t', number):
+            time = float(re.sub(r'[tT]', "", str(number)))
+            impact_number = (attribute_value / 20) * time
+        elif toolkits.is_number(number):
+            impact_number = float(number)
+            time = (impact_number * 20) / attribute_value
+
+        time = toolkits.reserve_two_decimals(time)
+        impact_number = toolkits.reserve_two_decimals(impact_number)
+
+        return attribute_name_cn, check_value_notice, impact_number, time
 
 
 # 读取character中的basic属性
@@ -510,6 +556,7 @@ class Group:
         self.path_group_folder = f'{base_folder}/group/{self.group}'
         self.path_group_file_tar = f'{self.path_group_folder}/grp_tar_{self.group}.txt'
         self.path_group_file_bat = f'{self.path_group_folder}/grp_bat_{self.group}.csv'
+        self.path_group_file_neg = f'{self.path_group_folder}/grp_neg_{self.group}.txt'
 
     def get_tar(self):
         if os.path.exists(self.path_group_file_tar) is False:
