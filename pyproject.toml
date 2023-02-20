@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "timeline_mirai_ariadne"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 graia-ariadne = "^0.10.3"
 graia-saya = "^0.0.17"
 click = "^8.1.3"

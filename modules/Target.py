@@ -17,7 +17,7 @@ from graia.ariadne.model import Group, Friend
 from graia.ariadne.util.saya import listen, dispatch
 
 from modules.tools import game_data, toolkits, regex
-from modules.tools.toolkits import Sender, Target, check_string
+from modules.tools.toolkits import Sender, Target
 
 """
 .tar {目标数值} 固定数值

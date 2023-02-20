@@ -1,4 +1,3 @@
-import random
 import re
 
 from graia.ariadne.app import Ariadne

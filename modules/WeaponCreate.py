@@ -2,16 +2,15 @@ import csv
 import os
 import re
 
-import pandas as pd
 from graia.ariadne.app import Ariadne
 from graia.ariadne.event.message import GroupMessage, FriendMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.parser.twilight import (
-    ParamMatch,
     RegexResult,
     RegexMatch,
     Twilight,
-    SpacePolicy, FullMatch, WildcardMatch,
+    SpacePolicy,
+    WildcardMatch,
 )
 from graia.ariadne.util.saya import listen, dispatch
 

@@ -1,4 +1,3 @@
-import os
 import re
 
 from graia.ariadne.app import Ariadne
@@ -13,7 +12,6 @@ from graia.ariadne.message.parser.twilight import (
 )
 from graia.ariadne.util.saya import listen, dispatch
 
-from modules import WeaponCreate
 from modules.tools import game_data, toolkits, regex
 from modules.tools.toolkits import Sender, Target
 

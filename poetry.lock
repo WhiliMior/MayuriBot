@@ -289,6 +289,17 @@ files = [
 creart = ">=0.1.0"
 
 [[package]]
+name = "decorators"
+version = "2.0.7"
+description = "Quickly create flexible Python decorators"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "decorators-2.0.7.tar.gz", hash = "sha256:9cf26202d6170a5cdca8a9cf6cd4b467c10601d4a9076470bceb9d282a5fa28a"},
+]
+
+[[package]]
 name = "frozenlist"
 version = "1.3.3"
 description = "A list-like structure which implements collections.abc.MutableSequence"
@@ -847,17 +858,6 @@ files = [
 ]
 
 [[package]]
-name = "utils"
-version = "1.0.1"
-description = "A grab-bag of utility functions and objects"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "utils-1.0.1-py2.py3-none-any.whl", hash = "sha256:ff04549b95deb2fd7a82ddaea077e2f41209079e2482df231c358770b27b72a7"},
-]
-
-[[package]]
 name = "wcwidth"
 version = "0.2.6"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -990,5 +990,5 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.11"
-content-hash = "c712cb9956c4052b5ef5fe112991ddcf20b6f4ebdac54dfd8549c3f88410fa4f"
+python-versions = "^3.10"
+content-hash = "5b381c9f55ea43484829cfa96351042b4cdd51dc82101b59580018891f855a9b"

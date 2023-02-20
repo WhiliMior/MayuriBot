@@ -7,7 +7,6 @@ from graia.ariadne.app import Ariadne
 from graia.ariadne.event.message import GroupMessage, FriendMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.parser.base import MatchRegex
-from graia.ariadne.model import Group, Friend, Member
 from graia.ariadne.util.saya import listen, decorate
 
 from modules.tools import game_data, toolkits, regex
