@@ -45,6 +45,9 @@ Mayuri来自[《命运石之门》](https://zh.moegirl.org.cn/zh-hans/%E5%91%BD%
 - [ ] bot开关
 - [ ] 权限系统
 
+## 指令文档
+请参阅 [指令文档](https://github.com/WhiliMior/MayuriBot/wiki/%E6%8C%87%E4%BB%A4%E6%96%87%E6%A1%A3)
+
 ## 部署
 请参阅 [如何部署](https://github.com/WhiliMior/MayuriBot/wiki/%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2)
 
