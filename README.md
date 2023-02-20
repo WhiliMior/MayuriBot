@@ -40,3 +40,6 @@
 - [ ] bot信息
 - [ ] bot开关
 - [ ] 权限系统
+
+## 部署
+请参阅 [如何部署Timeline Bot](https://github.com/WhiliMior/Timeline_Mirai_Ariadne/wiki/%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2Timeline-Bot)
