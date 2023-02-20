@@ -62,3 +62,13 @@ Mayuri来自[《命运石之门》](https://zh.moegirl.org.cn/zh-hans/%E5%91%BD%
 - [`redbot`](https://github.com/Redlnn/redbot): 一个以 Graia-Ariadne 框架为基础的 QQ 机器人
 - [`A_Simple_QQ_Bot`](https://github.com/I-love-study/A_Simple_QQ_Bot): 一个普普通通的 QQ 机器人
 - [`RainBot`](https://github.com/RF-Tar-Railt/RaianBot):  一个基于 Ariadne 与 Alconna 的简易 QQ 机器人
+
+## 版权声明
+
+本人不拥有《命运石之门》的美术资源与相关版权。本项目所借用的一切与《命运石之门》有关的资源都属于其原始创作者。本人借用《命运石之门》相关版权物的目的是为了给该项目增加美化度，不以该版权物牟利。
+
+本人不拥有Mirai和Graia框架，本人遵守上述两个框架的版权要求。
+
+本人拥有代码的解释权与责任归属。本人拥有除了《命运石之门》版权物与Mirai，Graia框架之外，但与该项目有关的一切创作的所有权。
+
+本人拥有`时间线 Timeline TRPG规则`（称为时间线、Timeline和TL规则），本人原创了该TRPG规则，对规则书和规则配套的Excel人物卡以及经我署名的衍生物拥有版权。
