@@ -4,9 +4,8 @@
 <img src="https://raw.githubusercontent.com/WhiliMior/MayuriBot/master/docs/Mayuri_Shiina.png" width = 260>
   
 # Mayuri Bot
-
+> 一切都是命运石之门的选择
 ### 一个以 [Graia Ariadne](https://github.com/GraiaProject/Ariadne) 框架为基础的 `时间线 Timeline TRPG规则` QQ跑团机器人
-
 Mayuri来自[《命运石之门》](https://zh.moegirl.org.cn/zh-hans/%E5%91%BD%E8%BF%90%E7%9F%B3%E4%B9%8B%E9%97%A8%E7%B3%BB%E5%88%97)中的角色[椎名真由理(Shiina Mayuri)](https://zh.moegirl.org.cn/%E6%A4%8E%E5%90%8D%E7%9C%9F%E7%94%B1%E7%90%86)
   
 <img src="https://img.shields.io/badge/python-3.10+-blue.svg"/> [![License](https://img.shields.io/github/license/WhiliMior/MayuriBot)](https://github.com/WhiliMior/Timeline_Mirai_Ariadne/blob/master/LICENSE)
