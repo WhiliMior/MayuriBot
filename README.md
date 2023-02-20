@@ -3,7 +3,7 @@
 
 # 时间线 Timeline
 
-一个以 [Graia Ariadne](https://github.com/GraiaProject/Ariadne) 框架为基础的 时间线TRPG规则 QQ跑团机器人
+一个以 [Graia Ariadne](https://github.com/GraiaProject/Ariadne) 框架为基础的 `时间线TRPG规则` QQ跑团机器人
 
 [![License](https://camo.githubusercontent.com/9d8685690d939f09fb77881d061c19ac926d5f75eba5787829fc9b9d2a26afe8/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f646a6b63796c2f42426f742d4772616961)](https://github.com/WhiliMior/Timeline_Mirai_Ariadne/blob/master/LICENSE)
 </div>
