@@ -47,7 +47,7 @@ Mayuri来自[《命运石之门》](https://zh.moegirl.org.cn/zh-hans/%E5%91%BD%
 - [ ] 权限系统
 
 ## 部署
-请参阅 [如何部署Timeline Bot](https://github.com/WhiliMior/Timeline_Mirai_Ariadne/wiki/%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2Timeline-Bot)
+请参阅 [如何部署](https://github.com/WhiliMior/MayuriBot/wiki/%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2)
 
 ## 鸣谢与相关项目
 [`Mamoe Technologies`](https://github.com/mamoe) 开发的QQ交互框架:
