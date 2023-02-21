@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "timeline-mirai-ariadne"
+name = "MayuriBot"
 version = "0.1.0"
 description = ""
 authors = ["WhiliMior <52067436+WhiliMior@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "timeline_mirai_ariadne"}]
+packages = [{include = "MayuriBot"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
