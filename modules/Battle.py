@@ -137,7 +137,7 @@ def print_battle_dataframe(battle_dataframe):
 
             # 三种武器的输出
             if wp_type == 'amplifier':
-                line_explanations = f'{wp_name} : {wp_attribute}{line_wp_note}' \
+                line_explanations = f'{wp_name} : {attribute_name}{line_wp_note}' \
                                     f'{line_note}'
             elif wp_type == 'artillery':
                 max_load = weapon_list[6]
@@ -349,6 +349,7 @@ async def Battle(app: Ariadne, sender: Sender, target: Target,
             # 没有
             else:
                 # 写入文件
+                toolkits.check_folder(path_group_folder)
                 csv_file = open(path_group_file_bat, 'w', newline='', encoding='utf-8-sig', errors='ignore')
                 writer = csv.writer(csv_file)
                 writer.writerow(header)
