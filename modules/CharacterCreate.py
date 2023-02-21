@@ -82,9 +82,6 @@ async def CreateCharacter(app: Ariadne, sender: Sender, target: Target,
     # 创建一个角色实例
     c = character_create(player_id, msg_plain)
     json_c = toolkits.obj_to_json(c)
-    # 计算详细数据
-    c_adv = game_data.create_advanced_attributes(c)
-    json_c_adv = toolkits.obj_to_json(c_adv)
     character_name = c.name
     # 创建玩家对象
     p = game_data.Player(player_id, character_name)
@@ -94,6 +91,9 @@ async def CreateCharacter(app: Ariadne, sender: Sender, target: Target,
     # 检查文件夹, 写入角色basic和adv数据
     toolkits.check_folder(player_folder)
     toolkits.write_file(character_file, json_c)
+    # 计算详细数据
+    c_adv = game_data.create_advanced_attributes(c)
+    json_c_adv = toolkits.obj_to_json(c_adv)
     toolkits.write_file(character_file_adv, json_c_adv)
     # 储存玩家信息
     player_file = p.path_file_player
