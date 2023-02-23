@@ -341,10 +341,10 @@ class Player:
 
         if toolkits.check_string('t', number):
             time = float(re.sub(r'[tT]', "", str(number)))
-            impact_number = (attribute_value / 20) * time
+            impact_number = (attribute_value / 10) * (time / 2)
         elif toolkits.is_number(number):
             impact_number = float(number)
-            time = (impact_number * 20) / attribute_value
+            time = (impact_number * 2) / (attribute_value / 10)
 
         time = toolkits.reserve_two_decimals(time)
         impact_number = toolkits.reserve_two_decimals(impact_number)
