@@ -76,7 +76,7 @@ def wrong_index():
 
 
 def del_buff(index):
-    return f'删除buff {index}√'
+    return f'删除buff [{index}]√'
 
 
 def del_buff_all():

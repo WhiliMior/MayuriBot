@@ -166,7 +166,7 @@ async def ManageWeapon(app: Ariadne, sender: Sender, target: Target,
                 else:
                     using = '[●]'
                 send_list.append(f'{("{} {}".format(using, data[0]))}')
-            content = content + '\n' + "\n".join(send_list) + '\n' + '请在指令后使用索引数字来更改角色选择'
+            content = content + '\n' + "\n".join(send_list) + '\n' + '请在指令后使用索引数字来更改武器选择'
             notice = content
 
     await app.send_message(sender, MessageChain(notice))

@@ -108,6 +108,7 @@ async def Negotiation(app: Ariadne, sender: Sender, target: Target,
 
         # 写入数值,attribute应为list
         def write_value(attributes):
+            toolkits.check_folder(g.path_group_folder)
             f = codecs.open(path_group_file_neg, 'w', 'utf-8')
             for line in attributes:
                 f.write('%s\n' % line)
