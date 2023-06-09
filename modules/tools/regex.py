@@ -8,6 +8,7 @@ Help = '^([.]|[。])help.*'
 # 所有游戏指令, (?i)忽略大小写
 CharacterCreate = f'^{headers}TLsetup?.*'
 CharacterManage = f'^{headers}ch[r]?'
+DamageReduction = f'^{headers}dr?'
 Target = f'^{headers}ta[r]?'
 Buff = f'^{headers}bu[f]?[f]?'
 WeaponCreate = f'^{headers}setupWP'

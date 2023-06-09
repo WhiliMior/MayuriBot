@@ -25,11 +25,11 @@ from modules.tools.toolkits import Sender, Target
 
 
 def select(character_name):
-    return f'已选择角色"{character_name}"√'
+    return f'已选择角色 [{character_name}]√'
 
 
 def delete(character_name):
-    return f'已删除角色"{character_name}"√'
+    return f'已删除角色 [{character_name}]√'
 
 
 def no_chr(player):
@@ -84,24 +84,35 @@ async def ManageCharacter(app: Ariadne, sender: Sender, target: Target,
                 p = game_data.Player(player_id, character_name)
                 character_file = p.path_file_character
                 character_file_adv = p.path_file_character_adv
+                character_file_crd = p.path_file_character_crd
                 character_file_weapon = p.path_weapon_character
                 character_file_buff = p.path_buff_character
+                character_file_reduction = p.path_reduction_character
                 if len(player_dataframe) <= 1:
-                    os.remove(player_file)
-                    os.remove(character_file)
-                    os.remove(character_file_adv)
-                    os.remove(character_file_weapon)
-                    os.remove(character_file_buff)
+                    try:
+                        os.remove(player_file)
+                        os.remove(character_file)
+                        os.remove(character_file_adv)
+                        os.remove(character_file_crd)
+                        os.remove(character_file_weapon)
+                        os.remove(character_file_buff)
+                        os.remove(character_file_reduction)
+                    finally:
+                        notice = delete(character_name)
                 else:
                     if character_using == 1:
                         player_dataframe.loc[0, 'using'] = 1
                     player_dataframe = player_dataframe.drop(index)
                     player_dataframe.to_csv(player_file, index=False)
-                    os.remove(character_file)
-                    os.remove(character_file_adv)
-                    os.remove(character_file_weapon)
-                    os.remove(character_file_buff)
-                notice = delete(character_name)
+                    try:
+                        os.remove(character_file)
+                        os.remove(character_file_adv)
+                        os.remove(character_file_crd)
+                        os.remove(character_file_weapon)
+                        os.remove(character_file_buff)
+                        os.remove(character_file_reduction)
+                    finally:
+                        notice = delete(character_name)
         # 有一个指令时
         elif command1.matched:
             # show 展示角色
@@ -157,5 +168,4 @@ async def ManageCharacter(app: Ariadne, sender: Sender, target: Target,
                 send_list.append(f'{("{} {}".format(using, data[1]))}')
             content = content + '\n' + "\n".join(send_list) + '\n' + '请在指令后使用索引数字来更改角色选择'
             notice = content
-
     await app.send_message(sender, MessageChain(notice))

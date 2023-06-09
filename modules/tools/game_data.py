@@ -14,7 +14,7 @@ def combine_lists_to_dict(a, b):
     return combined_dict
 
 
-from modules import Buff
+from modules import Buff, DamageReduction
 from modules.tools import toolkits
 
 
@@ -164,6 +164,7 @@ class Player:
         self.buff_dataframe = None
         self.player_dataframe = None
         self.weapon_dataframe = None
+        self.reduction_dataframe = None
 
         self.player = player_id
         self.path_folder_player = f'{base_folder}/player/{self.player}'
@@ -177,9 +178,10 @@ class Player:
             self.path_file_character_adv = f'{self.path_folder_player}/chr_{self.character_code}_adv.json'
             self.path_file_character_crd = f'{self.path_folder_player}/chr_{self.character_code}_crd.json'
 
-            # 角色buff文档
+            # 角色文档地址
             self.path_buff_character = f'{self.path_folder_player}/chr_{self.character_code}_buff.csv'
             self.path_weapon_character = f'{self.path_folder_player}/chr_{self.character_code}_weapon.csv'
+            self.path_reduction_character = f'{self.path_folder_player}/chr_{self.character_code}_reduction.csv'
             # buff 文档
             if os.path.exists(self.path_buff_character):
                 # 读取角色的buff列表到csv
@@ -191,6 +193,12 @@ class Player:
                 # 获取dataframe
                 csv_file = open(self.path_weapon_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
                 self.weapon_dataframe = pd.read_csv(csv_file, header=0, sep=',')
+                csv_file.close()
+            # 减伤文档
+            if os.path.exists(self.path_reduction_character):
+                # 读取角色的buff列表到csv
+                csv_file = open(self.path_reduction_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
+                self.reduction_dataframe = pd.read_csv(csv_file, header=0, sep=',')
                 csv_file.close()
 
     def get_character(self):
@@ -212,9 +220,10 @@ class Player:
             self.path_file_character_adv = f'{self.path_folder_player}/chr_{self.character_code}_adv.json'
             self.path_file_character_crd = f'{self.path_folder_player}/chr_{self.character_code}_crd.json'
 
-            # 角色buff文档
+            # 角色文档地址
             self.path_buff_character = f'{self.path_folder_player}/chr_{self.character_code}_buff.csv'
             self.path_weapon_character = f'{self.path_folder_player}/chr_{self.character_code}_weapon.csv'
+            self.path_reduction_character = f'{self.path_folder_player}/chr_{self.character_code}_reduction.csv'
             # buff 文档
             if os.path.exists(self.path_buff_character):
                 # 读取角色的buff列表到csv
@@ -226,6 +235,12 @@ class Player:
                 # 获取dataframe
                 csv_file = open(self.path_weapon_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
                 self.weapon_dataframe = pd.read_csv(csv_file, header=0, sep=',')
+                csv_file.close()
+            # 减伤文档
+            if os.path.exists(self.path_reduction_character):
+                # 读取角色的buff列表到csv
+                csv_file = open(self.path_reduction_character, 'r', newline='', encoding='utf-8-sig', errors='ignore')
+                self.reduction_dataframe = pd.read_csv(csv_file, header=0, sep=',')
                 csv_file.close()
 
             return True
@@ -289,6 +304,105 @@ class Player:
             attri_buffed = toolkits.reserve_two_decimals(attri_buffed)
 
             return attri_buffed, calculation_process
+
+    def get_damage_reduced(self, source_value, source_range, source_type):
+
+        reduction_direct = 0
+        reduction_percentage_add = 0
+        reduction_percentage_multiply = 1
+        reduction_count = 0
+
+        # 先把防御单独拿出来算成百分比
+        defence_sum = self.reduction_dataframe.loc[
+            (self.reduction_dataframe['type'] == source_type) &
+            (self.reduction_dataframe['range'] == source_range) &
+            (self.reduction_dataframe['defence'] == 1)
+            , 'value'].astype(float).sum()
+        defence_sum = float(defence_sum)
+
+        attri_dict_basic = toolkits.json_to_dict(self.path_file_character)
+        level = attri_dict_basic['level']
+        if source_range.startswith('-'):
+            range_type = '-'
+        else:
+            range_type = '+'
+        defence_percentage = DamageReduction.calculate_reduction(defence_sum, level, range_type)
+        defence_percentage = (1 - defence_percentage)
+
+        for index, data in self.reduction_dataframe.iterrows():
+            # 类型指的是-hp这种
+            reduction_range = data['range']
+            reduction_type = data['type']
+            defence = data['defence']
+            # 同时判断+hp类型以及“物理，魔法，真伤”类型是否与减伤相同
+            if source_range == reduction_range and defence == 0:
+                if reduction_type == '所有' or source_type == reduction_type or (
+                        source_type is None and reduction_type == '所有'):
+                    # 继续处理该减伤效果的代码
+                    # 添加缩进并写入要执行的代码
+                    # 这里是占位符，请根据实际逻辑填写要执行的代码
+                    print(index, source_type, reduction_type)
+                    pass
+                else:
+                    continue
+            else:
+                continue
+
+            # 开始计算
+            reduction_count += 1
+            reduction_value = data['value']
+            '''
+            defence = data['defence']
+            if defence == 1:
+                attri_dict_basic = toolkits.json_to_dict(self.path_file_character)
+                level = attri_dict_basic['level']
+                if source_range.startswith('-'):
+                    range_type = '-'
+                else:
+                    range_type = '+'
+                reduction_value = DamageReduction.calculate_reduction(reduction_value, level, range_type)
+            '''
+            # 如果是百分比减伤
+            if toolkits.check_string('%', reduction_value):
+                reduction_value = float(reduction_value.strip('%')) / 100
+                # 如果作用对象是减少资源的操作
+                if source_range.startswith('-'):
+                    # 这个是最终承伤率，而不是减伤率
+                    reduction_percentage_multiply *= (1 - float(reduction_value))
+                else:
+                    reduction_percentage_add += float(reduction_value)
+            elif toolkits.is_number(reduction_value):
+                reduction_value = float(reduction_value)
+                reduction_direct += reduction_value
+
+        calculation_process = None
+        # 保留小数
+        defence_percentage = toolkits.reserve_two_decimals(defence_percentage)
+        reduction_percentage_multiply = toolkits.reserve_two_decimals(reduction_percentage_multiply)
+        reduction_direct = toolkits.reserve_one_decimals(reduction_direct)
+        # 如果是减少hp或者mp，则多个百分比减伤是乘算
+        if source_range.startswith('-'):
+            result_value = source_value * defence_percentage * reduction_percentage_multiply + reduction_direct
+            if reduction_count > 0:
+                calculation_process = f'[{source_value}]*{defence_percentage}*{reduction_percentage_multiply}+{reduction_direct}'
+        # 如果是增加受到治疗，或者增加受到伤害，则多个百分比效果是加算
+        else:
+            result_value = source_value * defence_percentage * (1 + reduction_percentage_add) + reduction_direct
+            if reduction_count > 0:
+                calculation_process = f'[{source_value}]*{defence_percentage}*(1+{reduction_percentage_add})+{reduction_direct}'
+
+        # 保留一位小数
+        result_value = toolkits.reserve_one_decimals(result_value)
+        '''
+        # 废弃的设定
+        # 如果是减伤，那么最终减伤效果不能超过100%
+        if source_range.startswith('-') and result_value < 0:
+            result_value = 0
+        # 如果是减疗，那么最终受到治疗不能少于-100%
+        elif source_range.startswith('+') and result_value < 0:
+            reduction_value = 0
+        '''
+        return result_value, calculation_process
 
     def change_weight(self, weight):
         attri_dict = toolkits.json_to_dict(self.path_file_character)

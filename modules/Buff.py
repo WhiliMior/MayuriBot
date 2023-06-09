@@ -52,13 +52,22 @@ def no_buff(character_name):
     return f'{character_name}还没有buff×'
 
 
-def add_buff(character_name, buff_name):
-    return f'{character_name}增加buff[{buff_name}]√'
+def add_buff(character_name, buff_list):
+    buff_range = buff_list[1]
+    buff_range = r_en_to_cn[buff_range]
+    buff_type = buff_list[3]
+    buff_value = buff_list[2]
+    if buff_type in ['direct_time', 'final_time']:
+        buff_value = format(float(buff_value) * 100, '.0f') + '%'
+    buff_type = type_list_en_to_cn[buff_type]
+    return f'{character_name}增加buff[{buff_list[0]}]√\n' \
+           f'⚙{buff_range} [{buff_value}] {buff_type}'
 
 
 def wrong_range(range_input):
     return f'属性错误×\n' \
-           f'不存在属性[{range_input}]'
+           f'不存在属性[{range_input}]' \
+           f'属性范围可选：物理，思维，领域，所有'
 
 
 def wrong_value():
@@ -200,7 +209,7 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     writer = csv.writer(csv_file)
                     writer.writerow(header)
                     writer.writerow(buff_list)
-                notice = add_buff(character_name, buff_source)
+                notice = add_buff(character_name, buff_list)
         # 两个指令
         elif command2.matched:
             # 删除buff

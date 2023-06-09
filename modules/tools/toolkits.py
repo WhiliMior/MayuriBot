@@ -37,6 +37,7 @@ def reserve_one_decimals(number):
     # 返回一个float
     return float(format(number, '.1f'))
 
+
 # def不保留小数
 def reserve_zero_decimals(number):
     # 返回一个float

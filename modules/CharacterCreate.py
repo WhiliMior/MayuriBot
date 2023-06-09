@@ -21,7 +21,7 @@ output: str
 
 def get_notice(character):
     character_name = character.name
-    send = f'{character_name}的TL属性设置完成√'
+    send = f'[{character_name}] 的TL属性设置完成√'
     return send
 
 
