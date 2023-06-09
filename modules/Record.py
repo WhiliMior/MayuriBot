@@ -104,7 +104,10 @@ async def Record(app: Ariadne, sender: Sender, target: Target,
     character_name = p.character_name
     path_file_character_crd = p.path_file_character_crd
     path_reduction_character = p.path_reduction_character
-    character_crd_dict = toolkits.json_to_dict(path_file_character_crd)
+    try:
+        character_crd_dict = toolkits.json_to_dict(path_file_character_crd)
+    except FileNotFoundError:
+        pass
 
     notice = 'error'
     error = False
