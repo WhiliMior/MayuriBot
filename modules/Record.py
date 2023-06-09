@@ -44,7 +44,6 @@ def record_attri(character_name, attribute, attri_value_old, attri_value_new, at
         change = '[=]'
 
     attri_value_change = toolkits.reserve_one_decimals(attri_value_new-attri_value_old)
-    difference = toolkits.reserve_one_decimals(attri_value_new-attri_value_full)
 
     if calculation_process is None:
         calculation = ''
@@ -56,6 +55,7 @@ def record_attri(character_name, attribute, attri_value_old, attri_value_new, at
                   f'[{attribute}]变更: {change}{attri_value_change}{calculation}\n' \
                   f'{attri_value_old}→{attri_value_new}'
     else:
+        difference = toolkits.reserve_one_decimals(attri_value_new - attri_value_full)
         ratio_old = int(toolkits.reserve_zero_decimals((attri_value_old / attri_value_full) * 100))
         ratio_new = int(toolkits.reserve_zero_decimals((attri_value_new / attri_value_full) * 100))
         message = f'{character_name}: \n' \
