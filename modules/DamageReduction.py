@@ -186,9 +186,9 @@ async def DamageReduction(app: Ariadne, sender: Sender, target: Target,
                 else:
                     notice = wrong_value()
                     error = True
-            # 如果不含%，则判断是否含c
+            # 如果不含%，则判断是否含d，含d则为防御值
             elif toolkits.check_string('d', reduction_value_input):
-                # 去掉c
+                # 去掉d
                 reduction_value = float(reduction_value.strip('d'))
                 if toolkits.is_number(reduction_value):
                     # attri_dict_basic = toolkits.json_to_dict(path_file_character)

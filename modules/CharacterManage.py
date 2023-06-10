@@ -106,29 +106,29 @@ def get_character_picture(c_dict):
 
     # 外貌
     icon = Img.open('icons/Appearence.png')
-    location = (78, 287)
+    location = (426, 287)
     paste_picture(icon, location)
 
     appearance = int(c_dict['appearance'])
     text = f'外貌：{appearance}'
     font_size = 28
     color = (255, 255, 255)
-    location = (126, 288)
+    location = (476, 288)
     write_text(text, location)
 
     # 资产
     icon = Img.open('icons/Wealth.png')
-    location = (76, 348)
+    location = (426, 348)
     paste_picture(icon, location)
 
     wealth = int(c_dict['wealth'])
     text = f'资产：{wealth}'
-    location = (126, 350)
+    location = (476, 350)
     write_text(text, location)
 
     # 年龄
     icon = Img.open('icons/Age.png')
-    location = (76, 410)
+    location = (426, 410)
     paste_picture(icon, location)
 
     age = int(c_dict['age'])
@@ -137,12 +137,12 @@ def get_character_picture(c_dict):
     text = f"年龄：" \
            f"{age:{' '}<4}" \
            f"{adult_age:{' '}>5}"
-    location = (126, 412)
+    location = (476, 412)
     write_text(text, location)
 
     # 体型
     icon = Img.open('icons/Size.png')
-    location = (76, 471)
+    location = (426, 471)
     paste_picture(icon, location)
 
     size = int(c_dict['size'])
@@ -151,37 +151,37 @@ def get_character_picture(c_dict):
     text = f"体型：" \
            f"{size:{' '}<4}" \
            f"{standard_size:{' '}>5}"
-    location = (126, 474)
+    location = (476, 474)
     write_text(text, location)
 
     # 种族
     icon = Img.open('icons/Race.png')
-    location = (428, 298)
+    location = (76, 298)
     paste_picture(icon, location)
 
     race = c_dict['race']
     text = f'种族：{race}'
-    location = (478, 300)
+    location = (126, 300)
     write_text(text, location)
 
     # 性别
     icon = Img.open('icons/Gender.png')
-    location = (428, 380)
+    location = (76, 380)
     paste_picture(icon, location)
 
     gender = c_dict['gender']
     text = f'性别：{gender}'
-    location = (478, 380)
+    location = (126, 380)
     write_text(text, location)
 
     # 职业
     icon = Img.open('icons/Job.png')
-    location = (428, 462)
+    location = (76, 462)
     paste_picture(icon, location)
 
     occupation = c_dict['occupation']
     text = f'职业：{occupation}'
-    location = (478, 460)
+    location = (126, 460)
     write_text(text, location)
 
     first_distance = 5
@@ -216,8 +216,7 @@ def get_character_picture(c_dict):
     hp_stats = f'{hp}/{full_hitpoint}'
     hp_ratio = int((hp / full_hitpoint) * 100)
     hp_ratio = f'[{hp_ratio}%]'
-    text = f"HP " \
-           f"{hp_stats:{' '}<{first_distance}} " \
+    text = f"{hp_stats:{' '}<{first_distance}} " \
            f"{hp_ratio:{' '}<{second_distance}}"
     location = (76, 660)
     write_text(text, location)
@@ -228,8 +227,7 @@ def get_character_picture(c_dict):
     mp_stats = f'{mp}/{full_willpower}'
     mp_ratio = int((mp / full_willpower) * 100)
     mp_ratio = f'[{mp_ratio}%]'
-    text = f"MP " \
-           f"{mp_stats:{' '}<{first_distance}} " \
+    text = f"{mp_stats:{' '}<{first_distance}} " \
            f"{mp_ratio:{' '}<{second_distance}}"
     location = (426, 660)
     write_text(text, location)
@@ -295,7 +293,7 @@ def get_character_picture(c_dict):
     text = f"体 " \
            f"{constitution_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (130, 726)
+    location = (126, 726)
     write_text(text, location)
 
     # 敏捷
@@ -308,7 +306,7 @@ def get_character_picture(c_dict):
     text = f"敏 " \
            f"{dexterity_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (130, 792)
+    location = (126, 792)
     write_text(text, location)
 
     # 力量
@@ -321,7 +319,7 @@ def get_character_picture(c_dict):
     text = f"力 " \
            f"{strength_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (130, 858)
+    location = (126, 858)
     write_text(text, location)
 
     # 意志
@@ -334,7 +332,7 @@ def get_character_picture(c_dict):
     text = f"意 " \
            f"{willpower_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 726)
+    location = (476, 726)
     write_text(text, location)
 
     # 教育
@@ -347,7 +345,7 @@ def get_character_picture(c_dict):
     text = f"教 " \
            f"{education_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 792)
+    location = (476, 792)
     write_text(text, location)
 
     # 智力
@@ -360,7 +358,7 @@ def get_character_picture(c_dict):
     text = f"智 " \
            f"{intelligence_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 858)
+    location = (476, 858)
     write_text(text, location)
 
     # 医学
@@ -373,7 +371,7 @@ def get_character_picture(c_dict):
     text = f"医 " \
            f"{medicine_and_life_science_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 1008)
+    location = (476, 1008)
     write_text(text, location)
 
     # 工程
@@ -386,7 +384,7 @@ def get_character_picture(c_dict):
     text = f"工 " \
            f"{engineering_and_technology_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 1074)
+    location = (476, 1074)
     write_text(text, location)
 
     # 军事
@@ -399,7 +397,7 @@ def get_character_picture(c_dict):
     text = f"军 " \
            f"{military_and_survival_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 1140)
+    location = (476, 1140)
     write_text(text, location)
 
     # 文学
@@ -412,7 +410,7 @@ def get_character_picture(c_dict):
     text = f"文 " \
            f"{literature_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 1206)
+    location = (476, 1206)
     write_text(text, location)
 
     # 艺术
@@ -425,7 +423,7 @@ def get_character_picture(c_dict):
     text = f"艺 " \
            f"{visual_and_performing_art_buffed:{' '}<{first_distance}}" \
            f"{buff_amount:{' '}<{second_distance}}"
-    location = (480, 1272)
+    location = (476, 1272)
     write_text(text, location)
 
     # 负重
@@ -436,14 +434,14 @@ def get_character_picture(c_dict):
     weight = int(toolkits.reserve_zero_decimals(c_dict['weight']))
     full_weight = int(toolkits.reserve_zero_decimals(c_dict['full_weight']))
     text = f"负重 {weight}/{full_weight}"
-    location = (132, 1008)
+    location = (126, 1008)
     write_text(text, location)
 
     # 负重修正
     revision_weight = c_dict['revision_weight']
     revision_weight = int(toolkits.reserve_zero_decimals(revision_weight * 100))
     text = f"修正 [{revision_weight}%]"
-    location = (132, 1074)
+    location = (126, 1074)
     write_text(text, location)
 
     # 年龄修正
@@ -455,7 +453,7 @@ def get_character_picture(c_dict):
     revision_age_physical = c_dict['revision_age_physical']
     revision_age_physical = int(toolkits.reserve_zero_decimals(revision_age_physical * 100))
     text = f"修正 [{revision_age_physical}%]"
-    location = (132, 1140)
+    location = (126, 1140)
     color = (237, 125, 49)
     write_text(text, location)
 
@@ -463,7 +461,7 @@ def get_character_picture(c_dict):
     revision_age_mental = c_dict['revision_age_mental']
     revision_age_mental = int(toolkits.reserve_zero_decimals(revision_age_mental * 100))
     text = f"修正 [{revision_age_mental}%]"
-    location = (132, 1206)
+    location = (126, 1206)
     color = (68, 114, 196)
     write_text(text, location)
 
@@ -475,7 +473,7 @@ def get_character_picture(c_dict):
     revision_size = c_dict['revision_size']
     revision_size = int(toolkits.reserve_zero_decimals(revision_size * 100))
     text = f"修正 [{revision_size}%]"
-    location = (132, 1272)
+    location = (126, 1272)
     color = (255, 255, 255)
     write_text(text, location)
 

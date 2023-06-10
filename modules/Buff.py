@@ -15,6 +15,7 @@ from graia.ariadne.message.parser.twilight import (
 )
 from graia.ariadne.util.saya import listen, dispatch
 
+from modules import DamageReduction
 from modules.tools import game_data, toolkits, regex
 from modules.tools.toolkits import Sender, Target
 
@@ -62,7 +63,7 @@ def wrong_range(range_input):
 
 def wrong_value():
     return f'数值错误×\n' \
-           f'应为数字或百分数'
+           f'应为数字、百分数或"数字d"'
 
 
 def wrong_type():
@@ -149,6 +150,17 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                 else:
                     notice = wrong_value()
                     error = True
+            # 判断是否有d，有d则将数字转换为百分比
+            elif toolkits.check_string('d', buff_value_input):
+                # 去掉d
+                buff_value = float(buff_value.strip('d'))
+                if toolkits.is_number(buff_value):
+                    attri_dict_basic = toolkits.json_to_dict(p.path_file_character)
+                    level = attri_dict_basic['level']
+                    buff_value = DamageReduction.calculate_reduction(buff_value, level, '+')
+                else:
+                    notice = wrong_value()
+                    error = True
             # 判断是否为数字
             elif not toolkits.is_number(buff_value):
                 notice = wrong_value()
@@ -171,7 +183,7 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     error = True
             # 没有第四指令
             else:
-                if toolkits.check_string('%', buff_value_input):
+                if toolkits.check_string('%', buff_value_input) or toolkits.check_string('d', buff_value_input):
                     # 同时定义type
                     buff_type = 'direct_time'
                 elif toolkits.is_number(buff_value):
