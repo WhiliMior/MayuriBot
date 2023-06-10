@@ -65,7 +65,7 @@ def get_character_picture(c_dict):
     location = (76, 202)
     paste_picture(icon, location)
 
-    level = c_dict['level']
+    level = int(c_dict['level'])
     text = f'等级：{level}'
     location = (126, 200)
     write_text(text, location)
@@ -109,7 +109,7 @@ def get_character_picture(c_dict):
     location = (78, 287)
     paste_picture(icon, location)
 
-    appearance = c_dict['appearance']
+    appearance = int(c_dict['appearance'])
     text = f'外貌：{appearance}'
     font_size = 28
     color = (255, 255, 255)
@@ -227,7 +227,7 @@ def get_character_picture(c_dict):
     full_willpower = int(toolkits.reserve_zero_decimals((c_dict['full_willpower'])))
     mp_stats = f'{mp}/{full_willpower}'
     mp_ratio = int((mp / full_willpower) * 100)
-    mp_ratio = f'[{mp_ratio}]'
+    mp_ratio = f'[{mp_ratio}%]'
     text = f"MP " \
            f"{mp_stats:{' '}<{first_distance}} " \
            f"{mp_ratio:{' '}<{second_distance}}"
