@@ -52,16 +52,6 @@ def no_buff(character_name):
     return f'{character_name}还没有buff×'
 
 
-def add_buff(character_name, buff_list):
-    buff_range = buff_list[1]
-    buff_range = r_en_to_cn[buff_range]
-    buff_type = buff_list[3]
-    buff_value = buff_list[2]
-    if buff_type in ['direct_time', 'final_time']:
-        buff_value = format(float(buff_value) * 100, '.0f') + '%'
-    buff_type = type_list_en_to_cn[buff_type]
-    return f'{character_name}增加buff[{buff_list[0]}]√\n' \
-           f'⚙{buff_range} [{buff_value}] {buff_type}'
 
 
 def wrong_range(range_input):
@@ -209,6 +199,23 @@ async def Buff(app: Ariadne, sender: Sender, target: Target,
                     writer = csv.writer(csv_file)
                     writer.writerow(header)
                     writer.writerow(buff_list)
+
+                def add_buff(character_name, buff_list):
+                    buff_range = buff_list[1]
+                    # buff range 换为中文
+                    if buff_range in r_en_to_cn:
+                        buff_range = r_en_to_cn[buff_range]
+                    elif buff_range in advanced_en:
+                        buff_range = advanced_en_to_cn[buff_range]
+                        buff_range = buff_range.strip('检定_')
+                    buff_type = buff_list[3]
+                    buff_value = buff_list[2]
+                    if buff_type in ['direct_time', 'final_time']:
+                        buff_value = format(float(buff_value) * 100, '.0f') + '%'
+                    buff_type = type_list_en_to_cn[buff_type]
+                    return f'{character_name}增加buff[{buff_list[0]}]√\n' \
+                           f'⚙{buff_range} [{buff_value}] {buff_type}'
+
                 notice = add_buff(character_name, buff_list)
         # 两个指令
         elif command2.matched:
